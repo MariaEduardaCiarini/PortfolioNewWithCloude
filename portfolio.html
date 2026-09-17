@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maria Eduarda Ciarini — Desenvolvedora Backend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0D0B12;
+    --bg-alt: #110E16;
+    --surface: #17131F;
+    --line: rgba(237,233,245,0.12);
+    --line-soft: rgba(237,233,245,0.07);
+    --text: #EDE9F5;
+    --text-muted: #9A93AD;
+    --accent: #7C4DFF;
+    --accent-soft: rgba(124,77,255,0.16);
+    --accent-2: #C9A9FF;
+    --amber: #E9B95A;
+    --teal: #4FD1C5;
+    --max: 760px;
+    --rail: 84px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', -apple-system, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent); color:#fff; }
+
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  /* ---------- layout shell ---------- */
+  .rail{
+    position:fixed;
+    top:0; left:0; bottom:0;
+    width:var(--rail);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+    padding:28px 0;
+    border-right:1px solid var(--line-soft);
+    z-index:10;
+  }
+  .rail-mark{
+    width:36px; height:36px;
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:13px;
+    color:var(--accent-2);
+  }
+  .rail-nav{
+    display:flex; flex-direction:column; gap:22px;
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+  }
+  .rail-nav a{
+    font-size:12.5px;
+    color:var(--text-muted);
+    letter-spacing:0.02em;
+    transition:color .15s ease;
+  }
+  .rail-nav a:hover{ color:var(--accent-2); }
+  .rail-foot{
+    font-size:11px;
+    color:var(--text-muted);
+    writing-mode:vertical-rl;
+  }
+
+  main{
+    margin-left:var(--rail);
+    padding:0 32px;
+  }
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+  }
+
+  section{
+    padding:88px 0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  section:last-of-type{ border-bottom:none; }
+
+  .kicker{
+    font-size:13px;
+    color:var(--accent-2);
+    margin-bottom:14px;
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding-top:96px;
+    padding-bottom:88px;
+  }
+  .hero h1{
+    font-size:clamp(38px, 6vw, 58px);
+    line-height:1.05;
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .7s ease forwards;
+  }
+  .hero .role{
+    margin-top:16px;
+    font-size:19px;
+    color:var(--accent-2);
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:500;
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .7s ease .12s forwards;
+  }
+  .hero p.lede{
+    margin-top:22px;
+    max-width:56ch;
+    color:var(--text-muted);
+    font-size:16px;
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .7s ease .22s forwards;
+  }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  .hero-links{
+    margin-top:30px;
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  .hero-links a{
+    font-size:14.5px;
+    color:var(--text);
+    border-bottom:1px solid var(--line);
+    padding-bottom:3px;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .hero-links a:hover{ border-color:var(--accent-2); color:var(--accent-2); }
+
+  /* ---------- about ---------- */
+  .about p{
+    font-size:18px;
+    max-width:62ch;
+    color:var(--text);
+  }
+  .about p + p{ margin-top:16px; color:var(--text-muted); font-size:16px; }
+
+  /* ---------- experience ---------- */
+  .timeline{
+    margin-top:36px;
+    position:relative;
+    padding-left:28px;
+    border-left:1px solid var(--line);
+  }
+  .job{
+    position:relative;
+    padding-bottom:44px;
+  }
+  .job:last-child{ padding-bottom:0; }
+  .job::before{
+    content:"";
+    position:absolute;
+    left:-32.5px; top:4px;
+    width:9px; height:9px;
+    background:var(--accent);
+    transform:rotate(45deg);
+  }
+  .job-meta{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--text-muted);
+    margin-bottom:8px;
+  }
+  .job h3{ font-size:19px; }
+  .job .company{
+    color:var(--accent-2);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:14.5px;
+    font-weight:500;
+    margin-top:4px;
+  }
+  .job p{
+    margin-top:12px;
+    color:var(--text-muted);
+    font-size:15.5px;
+    max-width:60ch;
+  }
+
+  /* ---------- projects ---------- */
+  .projects-grid{
+    margin-top:36px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:1px;
+    background:var(--line-soft);
+    border:1px solid var(--line-soft);
+  }
+  .proj{
+    background:var(--bg);
+    padding:30px 28px;
+    position:relative;
+  }
+  .proj-tag{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--proj-color, var(--accent-2));
+    margin-bottom:12px;
+  }
+  .proj h3{ font-size:20px; margin-bottom:10px; }
+  .proj p{
+    color:var(--text-muted);
+    font-size:15px;
+    max-width:60ch;
+  }
+  .proj-stack{
+    margin-top:16px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .proj-stack span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--text-muted);
+    border:1px solid var(--line);
+    padding:4px 9px;
+  }
+  .proj::before{
+    content:"";
+    position:absolute;
+    left:0; top:0;
+    width:3px; height:100%;
+    background:var(--proj-color, var(--accent));
+  }
+
+  /* ---------- stack / skills ---------- */
+  .stack-group{ margin-top:30px; }
+  .stack-group:first-child{ margin-top:36px; }
+  .stack-group h3{
+    font-size:14.5px;
+    font-weight:500;
+    color:var(--text-muted);
+    font-family:'Inter', sans-serif;
+    margin-bottom:14px;
+  }
+  .stack-items{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .stack-items span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13.5px;
+    padding:7px 13px;
+    border:1px solid var(--line);
+    color:var(--text);
+    background:var(--surface);
+  }
+
+  /* ---------- contact ---------- */
+  .contact h2{
+    font-size:clamp(30px, 4.4vw, 42px);
+    max-width:14ch;
+  }
+  .contact p.lede{
+    margin-top:18px;
+    color:var(--text-muted);
+    font-size:16.5px;
+    max-width:52ch;
+  }
+  .contact-links{
+    margin-top:34px;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    border-top:1px solid var(--line);
+  }
+  .contact-links a{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid var(--line);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:18px;
+    transition:color .15s ease, padding-left .15s ease;
+  }
+  .contact-links a:hover{ color:var(--accent-2); padding-left:8px; }
+  .contact-links span.small{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--text-muted);
+  }
+  .contact-links a:hover span.small{ color:var(--accent-2); }
+
+  footer{
+    margin-left:var(--rail);
+    padding:26px 32px 40px;
+    font-size:12.5px;
+    color:var(--text-muted);
+  }
+
+  /* ---------- mobile ---------- */
+  @media (max-width: 720px){
+    .rail{
+      width:100%; height:auto;
+      position:static;
+      flex-direction:row;
+      padding:16px 20px;
+      border-right:none;
+      border-bottom:1px solid var(--line-soft);
+    }
+    .rail-nav{
+      writing-mode:horizontal-tb;
+      flex-direction:row;
+      gap:18px;
+    }
+    .rail-foot{ display:none; }
+    main{ margin-left:0; padding:0 22px; }
+    footer{ margin-left:0; padding:22px; }
+    .hero{ padding-top:52px; }
+    section{ padding:58px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero h1, .hero .role, .hero p.lede{ animation:none; opacity:1; transform:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="rail">
+  <div class="rail-mark">MC</div>
+  <div class="rail-nav">
+    <a href="#sobre">Sobre</a>
+    <a href="#formacao">Formação</a>
+    <a href="#experiencia">Experiência</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#stack">Stack</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <div class="rail-foot">São Paulo, BR</div>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <section class="hero" id="topo">
+      <div>
+        <h1>Maria Eduarda<br>Ciarini</h1>
+        <div class="role">Desenvolvedora Backend &amp; Dados</div>
+        <p class="lede">Formada em Análise e Desenvolvimento de Sistemas pela FIAP. Aplico conhecimento técnico e pensamento analítico na interseção entre tecnologia, dados e negócio — construindo sistemas e otimizando processos com foco em resultado.</p>
+        <div class="hero-links">
+          <a href="mailto:mariaeduardaciarini@gmail.com">E-mail</a>
+          <a href="https://www.linkedin.com/in/maria-eduarda-ciarini/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/MariaEduardaCiarini" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="sobre">
+      <div class="kicker">Sobre</div>
+      <p>Tenho interesse e experiência na interseção entre tecnologia, dados, negócios e administração.</p>
+      <p>Busco aplicar conhecimento técnico, pensamento analítico e visão estratégica na identificação de oportunidades, otimização de processos e desenvolvimento de soluções orientadas a resultados.</p>
+    </section>
+
+    <section id="formacao">
+      <div class="kicker">Formação</div>
+      <h2>Base acadêmica</h2>
+      <div class="timeline">
+        <div class="job">
+          <div class="job-meta">Conclusão: Jul 2025</div>
+          <h3>Tecnólogo em Análise e Desenvolvimento de Sistemas</h3>
+          <div class="company">FIAP — Faculdade de Informática e Administração Paulista</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experiencia">
+      <div class="kicker">Experiência</div>
+      <h2>Onde já atuei</h2>
+
+      <div class="timeline">
+        <div class="job">
+          <div class="job-meta">Set 2026 — atual · 1 mês · São Paulo e Região, Remoto</div>
+          <h3>Desenvolvedora de Backend &amp; Coordenação</h3>
+          <div class="company">Jet Family Assistência Técnica · Freelance</div>
+          <p>Supervisão do desenvolvimento do layout e estruturação da página comercial da empresa, com foco na experiência do usuário e na apresentação dos serviços. Organização estratégica de informações e elementos visuais, destacando os serviços de reparo e locação de lavadoras de alta pressão e aspiradores, para fortalecer a presença digital e facilitar a conversão de clientes.</p>
+        </div>
+
+        <div class="job">
+          <div class="job-meta">Projeto temporário</div>
+          <h3>Desenvolvedora Backend Júnior</h3>
+          <div class="company">Distribuidora Safari</div>
+          <p>Desenvolvimento e manutenção de sistemas internos com Python e Django, banco de dados PostgreSQL e gerenciamento de ambientes com virtualenv. Criação e integração de APIs REST com bancos relacionais, automação de processos internos e organização de dados, utilizando Git/GitHub e metodologia ágil Scrum.</p>
+        </div>
+
+        <div class="job">
+          <div class="job-meta">Suporte técnico</div>
+          <h3>Suporte Técnico</h3>
+          <div class="company">CS2 Seguros</div>
+          <p>Atendimento e suporte técnico a clientes, auxiliando no uso dos sistemas e na resolução de dúvidas. Diagnóstico e solução de problemas de software, acesso e configurações, com registro e acompanhamento de chamados até a resolução. Organização de informações e controles administrativos com Excel, Word e Outlook.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projetos">
+      <div class="kicker">Projetos</div>
+      <h2>O que já construí</h2>
+
+      <div class="projects-grid">
+        <div class="proj" style="--proj-color:#E9B95A">
+          <div class="proj-tag">app · dados em tempo real</div>
+          <h3>BTC Tracker</h3>
+          <p>Aplicação interativa em Streamlit para acompanhar a cotação do Bitcoin em USD e BRL, visualizar o histórico dos últimos 365 dias e converter entre BTC, satoshis, USD e BRL.</p>
+          <div class="proj-stack"><span>Python</span><span>Streamlit</span></div>
+        </div>
+
+        <div class="proj" style="--proj-color:#4FD1C5">
+          <div class="proj-tag">app · dados em tempo real</div>
+          <h3>FIIs em Tempo Real</h3>
+          <p>Aplicação em Streamlit para consulta de cotações de Fundos Imobiliários (FIIs) em tempo real, na mesma linha do BTC Tracker.</p>
+          <div class="proj-stack"><span>Python</span><span>Streamlit</span></div>
+        </div>
+
+        <div class="proj" style="--proj-color:#7C4DFF">
+          <div class="proj-tag">projeto acadêmico · API</div>
+          <h3>Webservice NoSQL</h3>
+          <p>API RESTful desenvolvida com CRUD, arquitetura MVC e tratamento de exceções.</p>
+          <div class="proj-stack"><span>Java</span><span>Spring Boot</span></div>
+        </div>
+
+        <div class="proj" style="--proj-color:#4FD1C5">
+          <div class="proj-tag">projeto acadêmico · mobile</div>
+          <h3>Aplicativo Mobile</h3>
+          <p>Aplicação Android com consumo de API externa e interface construída em Jetpack Compose.</p>
+          <div class="proj-stack"><span>Kotlin</span><span>Jetpack Compose</span></div>
+        </div>
+
+        <div class="proj" style="--proj-color:#E9B95A">
+          <div class="proj-tag">projeto acadêmico · automação</div>
+          <h3>Web Scraping</h3>
+          <p>Automação para coleta, tratamento e exportação de dados em CSV e JSON.</p>
+          <div class="proj-stack"><span>Python</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="kicker">Stack</div>
+      <h2>Linguagens e ferramentas</h2>
+
+      <div class="stack-group">
+        <h3>Linguagens</h3>
+        <div class="stack-items">
+          <span>Python</span><span>Java</span><span>Kotlin</span><span>JavaScript</span><span>SQL</span><span>HTML5</span><span>CSS3</span>
+        </div>
+      </div>
+
+      <div class="stack-group">
+        <h3>Backend</h3>
+        <div class="stack-items">
+          <span>Django</span><span>Spring Boot</span><span>Flask</span><span>APIs REST</span><span>CRUD</span><span>MVC</span><span>POO</span>
+        </div>
+      </div>
+
+      <div class="stack-group">
+        <h3>Mobile</h3>
+        <div class="stack-items">
+          <span>Android Studio</span><span>Kotlin</span><span>Jetpack Compose</span><span>Consumo de APIs REST</span>
+        </div>
+      </div>
+
+      <div class="stack-group">
+        <h3>Banco de dados</h3>
+        <div class="stack-items">
+          <span>PostgreSQL</span><span>MySQL</span><span>Oracle PL/SQL</span><span>SQL Server</span>
+        </div>
+      </div>
+
+      <div class="stack-group">
+        <h3>Ferramentas &amp; processo</h3>
+        <div class="stack-items">
+          <span>Docker</span><span>Git</span><span>GitHub</span><span>venv</span><span>Streamlit</span><span>Scrum</span><span>Kanban</span><span>Postman</span><span>IntelliJ IDEA</span><span>VS Code</span>
+        </div>
+      </div>
+
+      <div class="stack-group">
+        <h3>Administrativo</h3>
+        <div class="stack-items">
+          <span>Excel</span><span>Word</span><span>Documentação técnica</span><span>Organização de dados</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contato">
+      <div class="kicker">Contato</div>
+      <h2>Vamos conversar</h2>
+      <p class="lede">Aberta a oportunidades na área de tecnologia — desenvolvimento backend, dados ou onde conhecimento técnico e visão de negócio se encontram.</p>
+
+      <div class="contact-links">
+        <a href="mailto:mariaeduardaciarini@gmail.com">
+          <span>E-mail</span>
+          <span class="small">mariaeduardaciarini@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/maria-eduarda-ciarini/" target="_blank" rel="noopener">
+          <span>LinkedIn</span>
+          <span class="small">/in/maria-eduarda-ciarini</span>
+        </a>
+        <a href="https://github.com/MariaEduardaCiarini" target="_blank" rel="noopener">
+          <span>GitHub</span>
+          <span class="small">@MariaEduardaCiarini</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>Maria Eduarda Ciarini — {ANO}</footer>
+
+<script>
+  document.querySelector('footer').textContent =
+    'Maria Eduarda Ciarini — ' + new Date().getFullYear();
+</script>
+
+</body>
+</html>
