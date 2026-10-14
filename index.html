@@ -4,548 +4,224 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maria Eduarda Ciarini — Desenvolvedora Backend</title>
+<meta name="description" content="Portfólio de Maria Eduarda Ciarini, Desenvolvedora Backend & Dados.">
+<link rel="icon" id="fav" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #0D0B12;
-    --bg-alt: #110E16;
-    --surface: #17131F;
-    --line: rgba(237,233,245,0.12);
-    --line-soft: rgba(237,233,245,0.07);
-    --text: #EDE9F5;
-    --text-muted: #9A93AD;
-    --accent: #7C4DFF;
-    --accent-soft: rgba(124,77,255,0.16);
-    --accent-2: #C9A9FF;
-    --amber: #E9B95A;
-    --teal: #4FD1C5;
-    --max: 760px;
-    --rail: 84px;
-  }
-
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Inter', -apple-system, sans-serif;
-    font-size:16px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  ::selection{ background:var(--accent); color:#fff; }
-
-  h1,h2,h3{
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600;
-    margin:0;
-    letter-spacing:-0.01em;
-  }
-
-  a{ color:inherit; text-decoration:none; }
-
-  .mono{ font-family:'JetBrains Mono', monospace; }
-
-  /* ---------- layout shell ---------- */
-  .rail{
-    position:fixed;
-    top:0; left:0; bottom:0;
-    width:var(--rail);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:space-between;
-    padding:28px 0;
-    border-right:1px solid var(--line-soft);
-    z-index:10;
-  }
-  .rail-mark{
-    width:36px; height:36px;
-    border:1px solid var(--line);
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:600; font-size:13px;
-    color:var(--accent-2);
-  }
-  .rail-nav{
-    display:flex; flex-direction:column; gap:22px;
-    writing-mode:vertical-rl;
-    text-orientation:mixed;
-  }
-  .rail-nav a{
-    font-size:12.5px;
-    color:var(--text-muted);
-    letter-spacing:0.02em;
-    transition:color .15s ease;
-  }
-  .rail-nav a:hover{ color:var(--accent-2); }
-  .rail-foot{
-    font-size:11px;
-    color:var(--text-muted);
-    writing-mode:vertical-rl;
-  }
-
-  main{
-    margin-left:var(--rail);
-    padding:0 32px;
-  }
-  .wrap{
-    max-width:var(--max);
-    margin:0 auto;
-  }
-
-  section{
-    padding:88px 0;
-    border-bottom:1px solid var(--line-soft);
-  }
-  section:last-of-type{ border-bottom:none; }
-
-  .kicker{
-    font-size:13px;
-    color:var(--accent-2);
-    margin-bottom:14px;
-    font-family:'JetBrains Mono', monospace;
-  }
-
-  /* ---------- hero ---------- */
-  .hero{
-    padding-top:96px;
-    padding-bottom:88px;
-  }
-  .hero h1{
-    font-size:clamp(38px, 6vw, 58px);
-    line-height:1.05;
-    opacity:0;
-    transform:translateY(14px);
-    animation:rise .7s ease forwards;
-  }
-  .hero .role{
-    margin-top:16px;
-    font-size:19px;
-    color:var(--accent-2);
-    font-family:'Space Grotesk', sans-serif;
-    font-weight:500;
-    opacity:0;
-    transform:translateY(14px);
-    animation:rise .7s ease .12s forwards;
-  }
-  .hero p.lede{
-    margin-top:22px;
-    max-width:56ch;
-    color:var(--text-muted);
-    font-size:16px;
-    opacity:0;
-    transform:translateY(14px);
-    animation:rise .7s ease .22s forwards;
-  }
-  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
-
-  .hero-links{
-    margin-top:30px;
-    display:flex;
-    gap:22px;
-    flex-wrap:wrap;
-  }
-  .hero-links a{
-    font-size:14.5px;
-    color:var(--text);
-    border-bottom:1px solid var(--line);
-    padding-bottom:3px;
-    transition:border-color .15s ease, color .15s ease;
-  }
-  .hero-links a:hover{ border-color:var(--accent-2); color:var(--accent-2); }
-
-  /* ---------- about ---------- */
-  .about p{
-    font-size:18px;
-    max-width:62ch;
-    color:var(--text);
-  }
-  .about p + p{ margin-top:16px; color:var(--text-muted); font-size:16px; }
-
-  /* ---------- experience ---------- */
-  .timeline{
-    margin-top:36px;
-    position:relative;
-    padding-left:28px;
-    border-left:1px solid var(--line);
-  }
-  .job{
-    position:relative;
-    padding-bottom:44px;
-  }
-  .job:last-child{ padding-bottom:0; }
-  .job::before{
-    content:"";
-    position:absolute;
-    left:-32.5px; top:4px;
-    width:9px; height:9px;
-    background:var(--accent);
-    transform:rotate(45deg);
-  }
-  .job-meta{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    color:var(--text-muted);
-    margin-bottom:8px;
-  }
-  .job h3{ font-size:19px; }
-  .job .company{
-    color:var(--accent-2);
-    font-family:'Space Grotesk', sans-serif;
-    font-size:14.5px;
-    font-weight:500;
-    margin-top:4px;
-  }
-  .job p{
-    margin-top:12px;
-    color:var(--text-muted);
-    font-size:15.5px;
-    max-width:60ch;
-  }
-
-  /* ---------- projects ---------- */
-  .projects-grid{
-    margin-top:36px;
-    display:grid;
-    grid-template-columns:1fr;
-    gap:1px;
-    background:var(--line-soft);
-    border:1px solid var(--line-soft);
-  }
-  .proj{
-    background:var(--bg);
-    padding:30px 28px;
-    position:relative;
-  }
-  .proj-tag{
-    display:inline-block;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11.5px;
-    color:var(--proj-color, var(--accent-2));
-    margin-bottom:12px;
-  }
-  .proj h3{ font-size:20px; margin-bottom:10px; }
-  .proj p{
-    color:var(--text-muted);
-    font-size:15px;
-    max-width:60ch;
-  }
-  .proj-stack{
-    margin-top:16px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-  }
-  .proj-stack span{
-    font-family:'JetBrains Mono', monospace;
-    font-size:11.5px;
-    color:var(--text-muted);
-    border:1px solid var(--line);
-    padding:4px 9px;
-  }
-  .proj::before{
-    content:"";
-    position:absolute;
-    left:0; top:0;
-    width:3px; height:100%;
-    background:var(--proj-color, var(--accent));
-  }
-
-  /* ---------- stack / skills ---------- */
-  .stack-group{ margin-top:30px; }
-  .stack-group:first-child{ margin-top:36px; }
-  .stack-group h3{
-    font-size:14.5px;
-    font-weight:500;
-    color:var(--text-muted);
-    font-family:'Inter', sans-serif;
-    margin-bottom:14px;
-  }
-  .stack-items{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-  }
-  .stack-items span{
-    font-family:'JetBrains Mono', monospace;
-    font-size:13.5px;
-    padding:7px 13px;
-    border:1px solid var(--line);
-    color:var(--text);
-    background:var(--surface);
-  }
-
-  /* ---------- contact ---------- */
-  .contact h2{
-    font-size:clamp(30px, 4.4vw, 42px);
-    max-width:14ch;
-  }
-  .contact p.lede{
-    margin-top:18px;
-    color:var(--text-muted);
-    font-size:16.5px;
-    max-width:52ch;
-  }
-  .contact-links{
-    margin-top:34px;
-    display:flex;
-    flex-direction:column;
-    gap:0;
-    border-top:1px solid var(--line);
-  }
-  .contact-links a{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 0;
-    border-bottom:1px solid var(--line);
-    font-family:'Space Grotesk', sans-serif;
-    font-size:18px;
-    transition:color .15s ease, padding-left .15s ease;
-  }
-  .contact-links a:hover{ color:var(--accent-2); padding-left:8px; }
-  .contact-links span.small{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    color:var(--text-muted);
-  }
-  .contact-links a:hover span.small{ color:var(--accent-2); }
-
-  footer{
-    margin-left:var(--rail);
-    padding:26px 32px 40px;
-    font-size:12.5px;
-    color:var(--text-muted);
-  }
-
-  /* ---------- mobile ---------- */
-  @media (max-width: 720px){
-    .rail{
-      width:100%; height:auto;
-      position:static;
-      flex-direction:row;
-      padding:16px 20px;
-      border-right:none;
-      border-bottom:1px solid var(--line-soft);
-    }
-    .rail-nav{
-      writing-mode:horizontal-tb;
-      flex-direction:row;
-      gap:18px;
-    }
-    .rail-foot{ display:none; }
-    main{ margin-left:0; padding:0 22px; }
-    footer{ margin-left:0; padding:22px; }
-    .hero{ padding-top:52px; }
-    section{ padding:58px 0; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .hero h1, .hero .role, .hero p.lede{ animation:none; opacity:1; transform:none; }
-    html{ scroll-behavior:auto; }
-  }
+:root{--bg:#0a0612;--card:#150d24;--tx:#e8e3f5;--mut:#9a8fb5;--p:#ff2e9f;--c:#00f5ff;--v:#8a2be2;--bd:rgba(138,43,226,.35)}
+body.light{--bg:#faf7ff;--card:#fff;--tx:#241238;--mut:#6b5f85;--bd:rgba(138,43,226,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+[hidden]{display:none!important}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;transition:background .3s,color .3s;background-image:linear-gradient(rgba(138,43,226,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(138,43,226,.07) 1px,transparent 1px);background-size:44px 44px}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(520px circle at var(--x,50%) var(--y,20%),rgba(255,46,159,.16),transparent 60%)}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',monospace}
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--p),var(--c));z-index:99;box-shadow:0 0 10px var(--p)}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:1.2rem;padding:.7rem 5vw;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd)}
+.logo{display:flex;align-items:center;gap:.6rem;font-weight:700;margin-right:auto}
+.logo svg{width:38px;height:38px;transition:transform .4s}
+.logo:hover svg{transform:rotate(-12deg) scale(1.15)}
+nav .l{display:flex;gap:1.1rem;font-size:.9rem;color:var(--mut)}
+nav .l a{padding:.2rem 0;border-bottom:2px solid transparent;transition:.2s}
+nav .l a:hover,nav .l a.on{color:var(--c);border-color:var(--c)}
+#th{background:none;border:1px solid var(--bd);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1rem}
+@media(max-width:760px){nav .l{display:none}}
+section{padding:5rem 5vw;max-width:1100px;margin:auto}
+.tag{font-family:'JetBrains Mono',monospace;color:var(--c);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase}
+h2{font-size:clamp(1.7rem,4vw,2.4rem);margin:.3rem 0 2rem}
+h2::after{content:'';display:block;width:60px;height:3px;margin-top:.6rem;background:linear-gradient(90deg,var(--p),var(--c));border-radius:3px}
+#hero{min-height:88vh;display:grid;grid-template-columns:1.4fr 1fr;gap:2rem;align-items:center}
+@media(max-width:800px){#hero{grid-template-columns:1fr;text-align:center}#hero .av{order:-1;margin:auto}.btns{justify-content:center}}
+h1{font-size:clamp(2.4rem,7vw,4.2rem);line-height:1.05;margin:.6rem 0}
+h1 span{background:linear-gradient(90deg,var(--p),var(--v),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px rgba(255,46,159,.45))}
+.role{font-size:1.25rem;color:var(--c);min-height:2rem}
+.role::after{content:'▌';animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.lead{color:var(--mut);max-width:560px;margin:1rem 0 1.6rem}
+.btns{display:flex;flex-wrap:wrap;gap:.7rem}
+.btn{padding:.65rem 1.2rem;border:1px solid var(--p);border-radius:8px;font-size:.92rem;cursor:pointer;background:transparent;color:var(--tx);font-family:inherit;transition:.25s}
+.btn:hover{background:var(--p);color:#fff;box-shadow:0 0 18px var(--p);transform:translateY(-2px)}
+.btn.c{border-color:var(--c)}.btn.c:hover{background:var(--c);color:#0a0612;box-shadow:0 0 18px var(--c)}
+.av{width:min(300px,70vw);animation:fl 4s ease-in-out infinite;filter:drop-shadow(0 0 28px rgba(255,46,159,.55))}
+@keyframes fl{50%{transform:translateY(-14px)}}
+.av:hover{animation-duration:1s}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:1.4rem;transition:.3s}
+.card:hover{transform:translateY(-6px) rotate(-.4deg);border-color:var(--p);box-shadow:0 10px 30px rgba(255,46,159,.2)}
+.card h3{font-size:1.1rem;margin:.3rem 0}
+.card p{color:var(--mut);font-size:.93rem}
+.meta{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--c)}
+.tl{border-left:2px solid var(--bd);padding-left:1.6rem;display:grid;gap:1.2rem}
+.tl .card{position:relative}
+.tl .card::before{content:'';position:absolute;left:calc(-1.6rem - 7px);top:1.6rem;width:12px;height:12px;border-radius:50%;background:var(--p);box-shadow:0 0 12px var(--p)}
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.4rem}
+.filters button{font-family:'JetBrains Mono',monospace;font-size:.8rem;padding:.4rem .9rem;border-radius:99px;border:1px solid var(--bd);background:transparent;color:var(--mut);cursor:pointer;transition:.2s}
+.filters button:hover{color:var(--tx);border-color:var(--c)}
+.filters button.on{background:var(--v);color:#fff;border-color:var(--v);box-shadow:0 0 14px var(--v)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.8rem}
+.chip{font-family:'JetBrains Mono',monospace;font-size:.76rem;padding:.25rem .65rem;border-radius:6px;border:1px solid var(--bd);transition:.2s;cursor:default}
+.chip:hover{border-color:var(--c);color:var(--c);box-shadow:0 0 10px rgba(0,245,255,.4);transform:scale(1.08)}
+.chip.ai{border-color:var(--p);color:var(--p)}
+.chip.ai:hover{box-shadow:0 0 12px var(--p);color:var(--p);border-color:var(--p)}
+.sg h3{font-size:1rem;color:var(--tx)}
+.ct{text-align:center}.ct h2::after{margin-inline:auto}.ct .lead{margin-inline:auto}.ct .btns{justify-content:center}
+footer{text-align:center;padding:2rem;color:var(--mut);font-size:.85rem;border-top:1px solid var(--bd)}
+#top{position:fixed;right:20px;bottom:20px;width:46px;height:46px;border-radius:50%;border:1px solid var(--c);background:var(--card);color:var(--c);cursor:pointer;opacity:0;pointer-events:none;transition:.3s;font-size:1.1rem}
+#top.show{opacity:1;pointer-events:auto}#top:hover{box-shadow:0 0 16px var(--c);transform:translateY(-3px)}
+#toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,80px);background:var(--card);border:1px solid var(--p);padding:.6rem 1.2rem;border-radius:10px;transition:.3s;z-index:99}
+#toast.show{transform:translate(-50%,0)}
 </style>
 </head>
 <body>
+<div id="bar"></div>
 
-<nav class="rail">
-  <div class="rail-mark">MC</div>
-  <div class="rail-nav">
-    <a href="#sobre">Sobre</a>
-    <a href="#formacao">Formação</a>
-    <a href="#experiencia">Experiência</a>
-    <a href="#projetos">Projetos</a>
-    <a href="#stack">Stack</a>
-    <a href="#contato">Contato</a>
-  </div>
-  <div class="rail-foot">São Paulo, BR</div>
+<!-- Ícone: menina programando (usado na barra, no hero e no favicon) -->
+<svg width="0" height="0" style="position:absolute"><symbol id="g" viewBox="0 0 64 64">
+<circle cx="32" cy="32" r="31" fill="#1a0f2e" stroke="#ff2e9f" stroke-width="2"/>
+<path d="M18 34c-2-14 6-22 14-22s16 8 14 22c0 4-2 8-4 9H22c-2-1-4-5-4-9z" fill="#6a2c9c"/>
+<circle cx="32" cy="29" r="10" fill="#ffd6bd"/>
+<path d="M21 28c2-9 20-9 22 0-5-1-9-4-11-7-3 4-7 6-11 7z" fill="#6a2c9c"/>
+<circle cx="28" cy="30" r="1.3" fill="#2a1240"/><circle cx="36" cy="30" r="1.3" fill="#2a1240"/>
+<path d="M29 34q3 2 6 0" stroke="#c0405f" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+<rect x="14" y="43" width="36" height="14" rx="2" fill="#241238" stroke="#00f5ff" stroke-width="1.5"/>
+<path d="M27 47l-4 3 4 3M37 47l4 3-4 3M34 46l-4 8" stroke="#00f5ff" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol></svg>
+
+<nav>
+  <a href="#hero" class="logo"><svg><use href="#g"/></svg><span>Maria Eduarda</span></a>
+  <div class="l"><a href="#sobre">Sobre</a><a href="#formacao">Formação</a><a href="#experiencia">Experiência</a><a href="#projetos">Projetos</a><a href="#stack">Stack</a><a href="#contato">Contato</a></div>
+  <button id="th" title="Tema claro/escuro">☀️</button>
 </nav>
 
-<main>
-  <div class="wrap">
-
-    <section class="hero" id="topo">
-      <div>
-        <h1>Maria Eduarda<br>Ciarini</h1>
-        <div class="role">Desenvolvedora Backend &amp; Dados</div>
-        <p class="lede">Formada em Análise e Desenvolvimento de Sistemas pela FIAP. Aplico conhecimento técnico e pensamento analítico na interseção entre tecnologia, dados e negócio — construindo sistemas e otimizando processos com foco em resultado.</p>
-        <div class="hero-links">
-          <a href="mailto:mariaeduardaciarini@gmail.com">E-mail</a>
-          <a href="https://www.linkedin.com/in/maria-eduarda-ciarini/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://github.com/MariaEduardaCiarini" target="_blank" rel="noopener">GitHub</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="about" id="sobre">
-      <div class="kicker">Sobre</div>
-      <p>Tenho interesse e experiência na interseção entre tecnologia, dados, negócios e administração.</p>
-      <p>Busco aplicar conhecimento técnico, pensamento analítico e visão estratégica na identificação de oportunidades, otimização de processos e desenvolvimento de soluções orientadas a resultados.</p>
-    </section>
-
-    <section id="formacao">
-      <div class="kicker">Formação</div>
-      <h2>Base acadêmica</h2>
-      <div class="timeline">
-        <div class="job">
-          <div class="job-meta">Conclusão: Jul 2025</div>
-          <h3>Tecnólogo em Análise e Desenvolvimento de Sistemas</h3>
-          <div class="company">FIAP — Faculdade de Informática e Administração Paulista</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="experiencia">
-      <div class="kicker">Experiência</div>
-      <h2>Onde já atuei</h2>
-
-      <div class="timeline">
-        <div class="job">
-          <div class="job-meta">Set 2026 — atual · 1 mês · São Paulo e Região, Remoto</div>
-          <h3>Desenvolvedora de Backend &amp; Coordenação</h3>
-          <div class="company">Jet Family Assistência Técnica · Freelance</div>
-          <p>Supervisão do desenvolvimento do layout e estruturação da página comercial da empresa, com foco na experiência do usuário e na apresentação dos serviços. Organização estratégica de informações e elementos visuais, destacando os serviços de reparo e locação de lavadoras de alta pressão e aspiradores, para fortalecer a presença digital e facilitar a conversão de clientes.</p>
-        </div>
-
-        <div class="job">
-          <div class="job-meta">Projeto temporário</div>
-          <h3>Desenvolvedora Backend Júnior</h3>
-          <div class="company">Distribuidora Safari</div>
-          <p>Desenvolvimento e manutenção de sistemas internos com Python e Django, banco de dados PostgreSQL e gerenciamento de ambientes com virtualenv. Criação e integração de APIs REST com bancos relacionais, automação de processos internos e organização de dados, utilizando Git/GitHub e metodologia ágil Scrum.</p>
-        </div>
-
-        <div class="job">
-          <div class="job-meta">Suporte técnico</div>
-          <h3>Suporte Técnico</h3>
-          <div class="company">CS2 Seguros</div>
-          <p>Atendimento e suporte técnico a clientes, auxiliando no uso dos sistemas e na resolução de dúvidas. Diagnóstico e solução de problemas de software, acesso e configurações, com registro e acompanhamento de chamados até a resolução. Organização de informações e controles administrativos com Excel, Word e Outlook.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="projetos">
-      <div class="kicker">Projetos</div>
-      <h2>O que já construí</h2>
-
-      <div class="projects-grid">
-        <div class="proj" style="--proj-color:#E9B95A">
-          <div class="proj-tag">app · dados em tempo real</div>
-          <h3>BTC Tracker</h3>
-          <p>Aplicação interativa em Streamlit para acompanhar a cotação do Bitcoin em USD e BRL, visualizar o histórico dos últimos 365 dias e converter entre BTC, satoshis, USD e BRL.</p>
-          <div class="proj-stack"><span>Python</span><span>Streamlit</span></div>
-        </div>
-
-        <div class="proj" style="--proj-color:#4FD1C5">
-          <div class="proj-tag">app · dados em tempo real</div>
-          <h3>FIIs em Tempo Real</h3>
-          <p>Aplicação em Streamlit para consulta de cotações de Fundos Imobiliários (FIIs) em tempo real, na mesma linha do BTC Tracker.</p>
-          <div class="proj-stack"><span>Python</span><span>Streamlit</span></div>
-        </div>
-
-        <div class="proj" style="--proj-color:#7C4DFF">
-          <div class="proj-tag">projeto acadêmico · API</div>
-          <h3>Webservice NoSQL</h3>
-          <p>API RESTful desenvolvida com CRUD, arquitetura MVC e tratamento de exceções.</p>
-          <div class="proj-stack"><span>Java</span><span>Spring Boot</span></div>
-        </div>
-
-        <div class="proj" style="--proj-color:#4FD1C5">
-          <div class="proj-tag">projeto acadêmico · mobile</div>
-          <h3>Aplicativo Mobile</h3>
-          <p>Aplicação Android com consumo de API externa e interface construída em Jetpack Compose.</p>
-          <div class="proj-stack"><span>Kotlin</span><span>Jetpack Compose</span></div>
-        </div>
-
-        <div class="proj" style="--proj-color:#E9B95A">
-          <div class="proj-tag">projeto acadêmico · automação</div>
-          <h3>Web Scraping</h3>
-          <p>Automação para coleta, tratamento e exportação de dados em CSV e JSON.</p>
-          <div class="proj-stack"><span>Python</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="stack">
-      <div class="kicker">Stack</div>
-      <h2>Linguagens e ferramentas</h2>
-
-      <div class="stack-group">
-        <h3>Linguagens</h3>
-        <div class="stack-items">
-          <span>Python</span><span>Java</span><span>Kotlin</span><span>JavaScript</span><span>SQL</span><span>HTML5</span><span>CSS3</span>
-        </div>
-      </div>
-
-      <div class="stack-group">
-        <h3>Backend</h3>
-        <div class="stack-items">
-          <span>Django</span><span>Spring Boot</span><span>Flask</span><span>APIs REST</span><span>CRUD</span><span>MVC</span><span>POO</span>
-        </div>
-      </div>
-
-      <div class="stack-group">
-        <h3>Mobile</h3>
-        <div class="stack-items">
-          <span>Android Studio</span><span>Kotlin</span><span>Jetpack Compose</span><span>Consumo de APIs REST</span>
-        </div>
-      </div>
-
-      <div class="stack-group">
-        <h3>Banco de dados</h3>
-        <div class="stack-items">
-          <span>PostgreSQL</span><span>MySQL</span><span>Oracle PL/SQL</span><span>SQL Server</span>
-        </div>
-      </div>
-
-      <div class="stack-group">
-        <h3>Ferramentas &amp; processo</h3>
-        <div class="stack-items">
-          <span>Docker</span><span>Git</span><span>GitHub</span><span>venv</span><span>Streamlit</span><span>Scrum</span><span>Kanban</span><span>Postman</span><span>IntelliJ IDEA</span><span>VS Code</span>
-        </div>
-      </div>
-
-      <div class="stack-group">
-        <h3>Administrativo</h3>
-        <div class="stack-items">
-          <span>Excel</span><span>Word</span><span>Documentação técnica</span><span>Organização de dados</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact" id="contato">
-      <div class="kicker">Contato</div>
-      <h2>Vamos conversar</h2>
-      <p class="lede">Aberta a oportunidades na área de tecnologia — desenvolvimento backend, dados ou onde conhecimento técnico e visão de negócio se encontram.</p>
-
-      <div class="contact-links">
-        <a href="mailto:mariaeduardaciarini@gmail.com">
-          <span>E-mail</span>
-          <span class="small">mariaeduardaciarini@gmail.com</span>
-        </a>
-        <a href="https://www.linkedin.com/in/maria-eduarda-ciarini/" target="_blank" rel="noopener">
-          <span>LinkedIn</span>
-          <span class="small">/in/maria-eduarda-ciarini</span>
-        </a>
-        <a href="https://github.com/MariaEduardaCiarini" target="_blank" rel="noopener">
-          <span>GitHub</span>
-          <span class="small">@MariaEduardaCiarini</span>
-        </a>
-      </div>
-    </section>
-
+<section id="hero">
+  <div>
+    <p class="tag">&gt; São Paulo, BR</p>
+    <h1>Maria Eduarda <span>Ciarini</span></h1>
+    <p class="role mono" id="type"></p>
+    <p class="lead">Formada em Análise e Desenvolvimento de Sistemas pela FIAP. Aplico conhecimento técnico e pensamento analítico na interseção entre tecnologia, dados e negócio — construindo sistemas e otimizando processos com foco em resultado.</p>
+    <div class="btns">
+      <a class="btn" href="#projetos">Ver projetos</a>
+      <button class="btn c" id="cp">Copiar e-mail</button>
+      <a class="btn" href="https://www.linkedin.com/in/maria-eduarda-ciarini/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn c" href="https://github.com/MariaEduardaCiarini" target="_blank" rel="noopener">GitHub</a>
+    </div>
   </div>
-</main>
+  <svg class="av" role="img" aria-label="Menina programando"><use href="#g"/></svg>
+</section>
 
-<footer>Maria Eduarda Ciarini — {ANO}</footer>
+<section id="sobre" class="rv">
+  <p class="tag">// 01</p><h2>Sobre</h2>
+  <div class="card">
+    <p>Tenho interesse e experiência na interseção entre tecnologia, dados, negócios e administração.</p><br>
+    <p>Busco aplicar conhecimento técnico, pensamento analítico e visão estratégica na identificação de oportunidades, otimização de processos e desenvolvimento de soluções orientadas a resultados.</p>
+  </div>
+</section>
+
+<section id="formacao" class="rv">
+  <p class="tag">// 02</p><h2>Formação</h2>
+  <div class="card"><span class="meta">Conclusão: Jul 2025</span>
+    <h3>Tecnólogo em Análise e Desenvolvimento de Sistemas</h3>
+    <p>FIAP — Faculdade de Informática e Administração Paulista</p></div>
+</section>
+
+<section id="experiencia">
+  <p class="tag">// 03</p><h2>Experiência</h2>
+  <div class="tl">
+    <div class="card rv"><span class="meta">Set 2026 — atual · 1 mês · São Paulo e Região, Remoto</span>
+      <h3>Desenvolvedora de Backend &amp; Coordenação</h3><p><b>Jet Family Assistência Técnica</b> · Freelance</p><br>
+      <p>Supervisão do desenvolvimento do layout e estruturação da página comercial da empresa, com foco na experiência do usuário e na apresentação dos serviços. Organização estratégica de informações e elementos visuais, destacando os serviços de reparo e locação de lavadoras de alta pressão e aspiradores, para fortalecer a presença digital e facilitar a conversão de clientes.</p></div>
+    <div class="card rv"><span class="meta">Projeto temporário</span>
+      <h3>Desenvolvedora Backend Júnior</h3><p><b>Distribuidora Safari</b></p><br>
+      <p>Desenvolvimento e manutenção de sistemas internos com Python e Django, banco de dados PostgreSQL e gerenciamento de ambientes com virtualenv. Criação e integração de APIs REST com bancos relacionais, automação de processos internos e organização de dados, utilizando Git/GitHub e metodologia ágil Scrum.</p></div>
+    <div class="card rv"><span class="meta">Suporte técnico</span>
+      <h3>Suporte Técnico</h3><p><b>CS2 Seguros</b></p><br>
+      <p>Atendimento e suporte técnico a clientes, auxiliando no uso dos sistemas e na resolução de dúvidas. Diagnóstico e solução de problemas de software, acesso e configurações, com registro e acompanhamento de chamados até a resolução. Organização de informações e controles administrativos com Excel, Word e Outlook.</p></div>
+  </div>
+</section>
+
+<section id="projetos" class="rv">
+  <p class="tag">// 04</p><h2>Projetos</h2>
+  <div class="filters" id="pf">
+    <button class="on" data-f="all">Todos</button><button data-f="app">Apps</button><button data-f="acad">Acadêmicos</button>
+  </div>
+  <div class="grid">
+    <div class="card proj" data-c="app"><span class="meta">app · dados em tempo real</span><h3>BTC Tracker</h3>
+      <p>Aplicação interativa em Streamlit para acompanhar a cotação do Bitcoin em USD e BRL, visualizar o histórico dos últimos 365 dias e converter entre BTC, satoshis, USD e BRL.</p>
+      <div class="chips"><span class="chip">Python</span><span class="chip">Streamlit</span></div></div>
+    <div class="card proj" data-c="app"><span class="meta">app · dados em tempo real</span><h3>FIIs em Tempo Real</h3>
+      <p>Aplicação em Streamlit para consulta de cotações de Fundos Imobiliários (FIIs) em tempo real, na mesma linha do BTC Tracker.</p>
+      <div class="chips"><span class="chip">Python</span><span class="chip">Streamlit</span></div></div>
+    <div class="card proj" data-c="acad"><span class="meta">projeto acadêmico · API</span><h3>Webservice NoSQL</h3>
+      <p>API RESTful desenvolvida com CRUD, arquitetura MVC e tratamento de exceções.</p>
+      <div class="chips"><span class="chip">Java</span><span class="chip">Spring Boot</span></div></div>
+    <div class="card proj" data-c="acad"><span class="meta">projeto acadêmico · mobile</span><h3>Aplicativo Mobile</h3>
+      <p>Aplicação Android com consumo de API externa e interface construída em Jetpack Compose.</p>
+      <div class="chips"><span class="chip">Kotlin</span><span class="chip">Jetpack Compose</span></div></div>
+    <div class="card proj" data-c="acad"><span class="meta">projeto acadêmico · automação</span><h3>Web Scraping</h3>
+      <p>Automação para coleta, tratamento e exportação de dados em CSV e JSON.</p>
+      <div class="chips"><span class="chip">Python</span></div></div>
+  </div>
+</section>
+
+<section id="stack" class="rv">
+  <p class="tag">// 05</p><h2>Stack</h2>
+  <div class="filters" id="sf">
+    <button class="on" data-f="all">Todas</button><button data-f="lang">Linguagens</button><button data-f="back">Backend</button><button data-f="db">Dados</button><button data-f="tools">Ferramentas</button><button data-f="ia">IA</button>
+  </div>
+  <div class="grid">
+    <div class="card sg" data-c="lang"><h3>Linguagens</h3><div class="chips"><span class="chip">Python</span><span class="chip">Java</span><span class="chip">Kotlin</span><span class="chip">JavaScript</span><span class="chip">SQL</span><span class="chip">HTML5</span><span class="chip">CSS3</span></div></div>
+    <div class="card sg" data-c="back"><h3>Backend</h3><div class="chips"><span class="chip">Django</span><span class="chip">Spring Boot</span><span class="chip">Flask</span><span class="chip">APIs REST</span><span class="chip">CRUD</span><span class="chip">MVC</span><span class="chip">POO</span></div></div>
+    <div class="card sg" data-c="mobile"><h3>Mobile</h3><div class="chips"><span class="chip">Android Studio</span><span class="chip">Kotlin</span><span class="chip">Jetpack Compose</span><span class="chip">Consumo de APIs REST</span></div></div>
+    <div class="card sg" data-c="db"><h3>Banco de dados</h3><div class="chips"><span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">Oracle PL/SQL</span><span class="chip">SQL Server</span></div></div>
+    <div class="card sg" data-c="tools"><h3>Ferramentas &amp; processo</h3><div class="chips"><span class="chip">Docker</span><span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">venv</span><span class="chip">Streamlit</span><span class="chip">Scrum</span><span class="chip">Kanban</span><span class="chip">Postman</span><span class="chip">IntelliJ IDEA</span><span class="chip">VS Code</span></div></div>
+    <div class="card sg" data-c="ia"><h3>Inteligência Artificial</h3><div class="chips"><span class="chip ai">Claude</span><span class="chip ai">ChatGPT</span></div></div>
+    <div class="card sg" data-c="adm"><h3>Administrativo</h3><div class="chips"><span class="chip">Excel</span><span class="chip">Word</span><span class="chip">Documentação técnica</span><span class="chip">Organização de dados</span></div></div>
+  </div>
+</section>
+
+<section id="contato" class="ct rv">
+  <p class="tag">// 06</p><h2>Vamos conversar</h2>
+  <p class="lead">Aberta a oportunidades na área de tecnologia — desenvolvimento backend, dados ou onde conhecimento técnico e visão de negócio se encontram.</p>
+  <div class="btns">
+    <a class="btn" href="mailto:mariaeduardaciarini@gmail.com">E-mail</a>
+    <a class="btn c" href="https://www.linkedin.com/in/maria-eduarda-ciarini/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://github.com/MariaEduardaCiarini" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section>
+
+<footer>Maria Eduarda Ciarini — <span id="y"></span></footer>
+<button id="top" title="Voltar ao topo">↑</button>
+<div id="toast"></div>
 
 <script>
-  document.querySelector('footer').textContent =
-    'Maria Eduarda Ciarini — ' + new Date().getFullYear();
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+$('#y').textContent=new Date().getFullYear();
+// favicon = menina programando
+$('#fav').href='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">'+$('#g').innerHTML+'</svg>');
+// barra de progresso + botão topo
+onscroll=()=>{const h=document.documentElement;$('#bar').style.width=h.scrollTop/(h.scrollHeight-h.clientHeight)*100+'%';$('#top').classList.toggle('show',h.scrollTop>500)};
+$('#top').onclick=()=>scrollTo({top:0});
+// texto digitando
+const roles=['Desenvolvedora Backend & Dados','Java + Spring Boot','Python + Django/Flask','APIs REST & Bancos de Dados'];let r=0,c=0,d=false;
+(function t(){const w=roles[r];c+=d?-1:1;$('#type').textContent=w.slice(0,c);if(!d&&c==w.length){d=true;return setTimeout(t,1400)}if(d&&c==0){d=false;r=(r+1)%roles.length}setTimeout(t,d?30:60)})();
+// aparece ao rolar
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});$$('.rv').forEach(e=>io.observe(e));
+// menu ativo
+const so=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)$$('nav .l a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+x.target.id))}),{rootMargin:'-45% 0px -50% 0px'});$$('section[id]').forEach(s=>so.observe(s));
+// filtros (projetos e stack)
+function filt(btns,items){btns.forEach(b=>b.onclick=()=>{btns.forEach(x=>x.classList.remove('on'));b.classList.add('on');items.forEach(i=>i.hidden=!(b.dataset.f=='all'||i.dataset.c==b.dataset.f))})}
+filt($$('#pf button'),$$('.proj'));filt($$('#sf button'),$$('.sg'));
+// brilho que segue o mouse
+onmousemove=e=>{document.body.style.setProperty('--x',e.clientX+'px');document.body.style.setProperty('--y',e.clientY+'px')};
+// tema claro/escuro
+$('#th').onclick=()=>{$('#th').textContent=document.body.classList.toggle('light')?'🌙':'☀️'};
+// copiar e-mail
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+$('#cp').onclick=()=>{navigator.clipboard.writeText('mariaeduardaciarini@gmail.com').then(()=>toast('E-mail copiado! 💜'))};
 </script>
-
 </body>
 </html>
